@@ -11,6 +11,10 @@ export async function errorHandler(error: CustomErrors, req: Request, res: Respo
         return res.status(404).send(error.message)
     }
 
+    if (error.type === "invalid_inputs") {
+        return res.status(422).send(error.message)
+    }
+
     if (error.type === "unauthorized") {
         return res.status(422).send(error.message)
     }
