@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  password    String
+  createdAt   DateTime      @default(now())
+  Credentials Credentials[]
+  Notes       Notes[]
+  Cards       Cards[]
+  Wifi        Wifi[]
+  Sessions    Sessions[]
+
+  @@map("users")
+}
+
+model Credentials {
+  id        Int      @id @default(autoincrement())
+  title     String
+  username  String
+  url       String
+  password  String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("credentials")
+}
+
+model Notes {
+  id        Int      @id @default(autoincrement())
+  title     String
+  text      String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("notes")
+}
+
+model Cards {
+  id             Int      @id @default(autoincrement())
+  title          String?
+  description    String?
+  number         String
+  cardName       String
+  securityCode   String
+  expirationDate String
+  password       String
+  isVirtual      Boolean  @default(false)
+  type           String
+  createAt       DateTime @default(now())
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@map("cards")
+}
+
+model Wifi {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  routerName  String
+  password    String
+  createdAt   DateTime @default(now())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@map("wifi")
+}
+
+model Sessions {
+  id        Int      @id @default(autoincrement())
+  token     String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
