@@ -1,5 +1,8 @@
+import { Sessions } from "@prisma/client";
 import client from "../config/db";
 import { User } from "../services/userService";
+
+type OpenSession = Omit<Sessions, "id">;
 
 export function getUserByEmail(email: string) {
     const respo = client.user.findUnique({
@@ -14,8 +17,8 @@ export async function insertUser(userInfo: User) {
     })
 }
 
-export async function openSession(token: string) {
+export async function openSession(sessionsInfo: OpenSession) {
     return await client.sessions.create({
-        data: {token}
+        data: sessionsInfo
     })
 }

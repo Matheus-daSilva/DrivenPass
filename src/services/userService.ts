@@ -6,6 +6,7 @@ export interface User {
     password: string;
 }
 
+
 async function getEmailFunction(email: string) {
     const respo = await getUserByEmail(email)
     return respo
@@ -19,15 +20,26 @@ export async function signUpService(userInfo: User) {
 
 export async function signInService(userInfo: User) {
     const emailChecking = await getEmailFunction(userInfo.email)
+
     let token = ""
+
+    const sessionsInfo = {
+        token,
+        userId: Number(emailChecking.id),
+    }
 
     if (!emailChecking.email || !bcrypt.compareSync(userInfo.password, emailChecking.password)) {
         throw { type: "invalid_credentials", message: "invalid credentials" }
     }
 
 
-    await openSession(token)
+    await openSession(sessionsInfo)
 
-    return { email: emailChecking.email, password: emailChecking.password, token }
+    return { 
+        email: emailChecking.email, 
+        password: emailChecking.password, 
+        userId: emailChecking.id, 
+        token 
+    }
 
 }

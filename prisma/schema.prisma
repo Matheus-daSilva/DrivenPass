@@ -68,7 +68,7 @@ model Cards {
 
 model Wifi {
   id          Int      @id @default(autoincrement())
-  title       String
+  title       String?
   description String?
   routerName  String
   password    String
@@ -80,11 +80,11 @@ model Wifi {
 }
 
 model Sessions {
-  id        Int      @id @default(autoincrement())
-  token     String
+  id Int @id @default(autoincrement())
+  token String 
   createdAt DateTime @default(now())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 
   @@map("sessions")
 }
