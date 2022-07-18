@@ -46,12 +46,14 @@ export async function getCredentialsService(userInfo: Locals) {
 
 export async function getCredentialByIdService(id: number) {
     const respo = await getOneCredential(id)
+    if (!respo) throw {type: "not_found", message: "this object does not exist"}
     return respo
 }
 
 export async function deleteCredentialService(id: number, userLocals: Locals) {
-    const respo1 = await getOneCredential(id)
-    if (respo1.userId !== userLocals.userId) throw {type: "unauthorized", message: "unauthorized"}
+    const respo = await getOneCredential(id)
+    if (!respo) throw {type: "not_found", message: "this object does not exist"}
+    if (respo.userId !== userLocals.userId) throw {type: "unauthorized", message: "unauthorized"}
     return await deleteCredential(id)
 }
 
