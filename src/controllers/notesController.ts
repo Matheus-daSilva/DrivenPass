@@ -6,6 +6,8 @@ export async function PostNotesController(req: Request, res: Response) {
 
     const userLocals = res.locals.user
 
+    console.log(userLocals)
+
     const notesInfo = {
         title,
         text,
@@ -31,5 +33,6 @@ export async function GetNoteByIdController(req: Request, res: Response) {
 export async function DeleteNoteController(req: Request, res: Response) {
     const { id } = req.params
     const userLocals = res.locals.user
-    const respo = await deleteNoteService(Number(id), userLocals)
+    const respo = await deleteNoteService(Number(id), Number(userLocals.userId))
+    return res.status(204).send("object deleted")
 }

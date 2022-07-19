@@ -1,11 +1,7 @@
+import { Notes } from "@prisma/client";
 import { deleteNote, getAllNotes, getNoteByTitle, getOneNote, postNote } from "../repositories/notesRepository.js";
-import { Locals } from "./credentialsService.js";
 
-export interface NoteBody {
-    title: string;
-    text: string;
-    userId: number;
-}
+export type NoteBody = Omit<Notes, "id" | "createdAt">
 
 async function getNoteTitle(title: string) {
     const respo = await getNoteByTitle(title)
@@ -33,11 +29,11 @@ export async function getNoteByIdService(id: number) {
     return respo
 }
 
-export async function deleteNoteService(id: number, userLocals: Locals) {
+export async function deleteNoteService(id: number, userId: number) {
     const respo = await getOneNote(id)
 
     if (!respo) throw {type: "not_found", message: "this object does not exist"}
-    if (respo.userId !== userLocals.userId) throw {type: "unauthorized", message: "unauthorized"}
+    if (respo.userId !== userId) throw {type: "unauthorized", message: "unauthorized"}
 
     await deleteNote(id)
 

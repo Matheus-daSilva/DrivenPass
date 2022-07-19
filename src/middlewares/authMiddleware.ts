@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { signUpSchema } from "../schemas/authSchema.js";
+import { Request, Response, NextFunction } from "express"
+import { signUpSchema } from "../schemas/authSchema.js"
 
 export async function authMiddleware(req: Request, res: Response, next: NextFunction){
     const { body } = req;

@@ -1,9 +1,9 @@
-import client from "../config/db"
-import { NoteBody } from "../services/notesService"
+import client from "../config/db.js"
+import { NoteBody } from "../services/notesService.js"
 
 
 export function getNoteByTitle(title: string) {
-    const respo = client.notes.findMany({
+    const respo = client.notes.findFirst({
         where: {title}
     })
     return respo

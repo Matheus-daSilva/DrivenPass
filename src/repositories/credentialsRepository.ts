@@ -1,9 +1,9 @@
-import client from "../config/db";
+import client from "../config/db.js";
 import { CredentialsInfos } from "../services/credentialsService.js";
 
 
 export function getByTitle(title: string){
-    const respo = client.credentials.findMany({
+    const respo = client.credentials.findFirst({
         where: {title}
     })
     return respo

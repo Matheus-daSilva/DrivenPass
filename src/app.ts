@@ -4,12 +4,14 @@ import dotenv from "dotenv"
 import cors from "cors"
 import chalk from "chalk"
 import { errorHandler } from "./middlewares/errorHandlerMiddleware.js"
+import router from "./routers/routes.js"
 
 dotenv.config()
 
 const app = express()
 app.use(json())
 app.use(cors())
+app.use(router)
 app.use(errorHandler)
 
 const port = process.env.PORT || 4000

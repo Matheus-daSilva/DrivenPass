@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { insertUser } from "../repositories/userRepository.js";
 import bcrypt from "bcrypt";
-import { signInService } from "../services/userService.js";
+import { signInService, signUpService } from "../services/userService.js";
 
 export async function SignUpController(req: Request, res: Response){
     const {email, password} : {email: string, password: string}= req.body
@@ -13,7 +13,7 @@ export async function SignUpController(req: Request, res: Response){
         password: passwordHash
     }
 
-    await insertUser(userInfo)
+    await signUpService(userInfo)
 
     return res.sendStatus(201)
 }
@@ -21,10 +21,10 @@ export async function SignUpController(req: Request, res: Response){
 export async function SignInController(req: Request, res: Response) {
     const {email, password} : {email: string, password: string}= req.body
     const respo = await signInService({email, password})
-    const userLocals = {
-        email: respo.email,
-        userId: respo.userId
-    }
-    res.locals.user = userLocals
+    // const userLocals = {
+    //     email: respo.email,
+    //     userId: respo.userId
+    // }
+    // res.locals.user = userLocals
     return res.status(201).send(respo)
 }
