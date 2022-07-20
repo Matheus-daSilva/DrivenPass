@@ -13,11 +13,7 @@ export async function tokenValidation(req: Request, res: Response, next: NextFun
 
     const user = await getSession(token)
 
-    const userLocals = {
-        userId: user.id
-    }
-
-    res.locals.user = userLocals
+    res.locals.user = user.userId
 
     next()
 }
