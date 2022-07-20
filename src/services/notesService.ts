@@ -35,6 +35,6 @@ export async function deleteNoteService(id: number, userId: number) {
     if (!respo) throw {type: "not_found", message: "this object does not exist"}
     if (respo.userId !== userId) throw {type: "unauthorized", message: "unauthorized"}
 
-    await deleteNote(id)
+    return await deleteNote(id)
 
 }

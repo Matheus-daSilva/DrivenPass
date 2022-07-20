@@ -21,10 +21,5 @@ export async function SignUpController(req: Request, res: Response){
 export async function SignInController(req: Request, res: Response) {
     const {email, password} : {email: string, password: string}= req.body
     const respo = await signInService({email, password})
-    // const userLocals = {
-    //     email: respo.email,
-    //     userId: respo.userId
-    // }
-    // res.locals.user = userLocals
     return res.status(201).send(respo)
 }

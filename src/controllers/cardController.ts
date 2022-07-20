@@ -7,7 +7,7 @@ export async function PostCardController(req: Request, res: Response) {
     const userLocals = res.locals.user
 
     await postCardService(Number(userLocals.userId), body)
-    res.status(201).send("created")
+    return res.status(201).send("created")
 }
 
 export async function GetCardsController(req: Request, res: Response) {
@@ -20,7 +20,7 @@ export async function GetCardByIdController(req: Request, res: Response) {
     const { id } = req.params
     const userLocals = res.locals.user
     const card = await getCardByIdService(Number(id), Number(userLocals.userId))
-    res.status(200).send(card)
+    return res.status(200).send(card)
 }
 
 export async function DeleteCardController(req: Request, res: Response) {

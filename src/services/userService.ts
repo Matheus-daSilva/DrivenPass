@@ -13,7 +13,7 @@ export async function getEmailFunction(email: string) {
 export async function signUpService(userInfo: InfoUser) {
     const emailChecking = await getEmailFunction(userInfo.email)
     if (emailChecking) throw { type: "conflict", message: "this email adress has already exist" }
-    await insertUser(userInfo)
+    return await insertUser(userInfo)
 }
 
 export async function signInService(userInfo: InfoUser) {
